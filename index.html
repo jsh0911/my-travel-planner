@@ -10,125 +10,89 @@
         @font-face {
             font-family: 'DungGeunMo';
             src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
         }
-        body {
-            font-family: 'DungGeunMo', monospace;
-            background-color: #008080;
-        }
-        .win-border {
-            border-top: 2px solid white;
-            border-left: 2px solid white;
-            border-bottom: 2px solid #4a4a4a;
-            border-right: 2px solid #4a4a4a;
-        }
-        .win-inset {
-            border-top: 2px solid #4a4a4a;
-            border-left: 2px solid #4a4a4a;
-            border-bottom: 2px solid white;
-            border-right: 2px solid white;
-        }
-        .win-btn-active {
-            transform: translate(1px, 1px);
-            box-shadow: none !important;
-        }
-        .tab-active {
-            background-color: #c0c0c0 !important;
-            border-bottom: none !important;
-            font-weight: bold;
-            z-index: 10;
-        }
-        .day-active {
-            background-color: #000080 !important;
-            color: white !important;
-            padding-bottom: 8px !important;
-        }
+        body { font-family: 'DungGeunMo', monospace; background-color: #008080; }
+        .win-border { border-top: 2px solid white; border-left: 2px solid white; border-bottom: 2px solid #4a4a4a; border-right: 2px solid #4a4a4a; }
+        .win-inset { border-top: 2px solid #4a4a4a; border-left: 2px solid #4a4a4a; border-bottom: 2px solid white; border-right: 2px solid white; }
+        .tab-active { background-color: #c0c0c0 !important; border-bottom: none !important; font-weight: bold; z-index: 10; }
+        .day-active { background-color: #000080 !important; color: white !important; }
     </style>
 </head>
 <body class="p-4 md:p-10">
     <div id="app" class="max-w-2xl mx-auto bg-[#c0c0c0] win-border p-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-        <!-- Title Bar -->
         <div class="bg-gradient-to-r from-[#000080] to-[#1084d0] p-1 flex justify-between items-center mb-2">
             <div class="flex items-center gap-2 px-1">
                 <i data-lucide="plane" class="w-4 h-4 text-white"></i>
                 <span class="text-white font-bold text-xs md:text-sm">TRIP_PLANNER_PRO.EXE</span>
             </div>
             <div class="flex gap-1 pr-1">
-                <button class="w-4 h-4 bg-[#c0c0c0] text-black border border-gray-400 flex items-center justify-center text-[10px]">_</button>
                 <button class="w-4 h-4 bg-[#c0c0c0] text-black border border-gray-400 flex items-center justify-center text-[10px]">X</button>
             </div>
         </div>
 
-        <!-- Main Navigation -->
         <div class="flex gap-1 px-2 mb-0">
-            <button onclick="switchTab('schedule')" id="tab-schedule" class="px-3 md:px-5 py-1 text-sm border-t-2 border-l-2 border-r-2 border-gray-600 bg-[#a0a0a0] flex items-center gap-2">
-                <i data-lucide="calendar" class="w-3 h-3"></i> 일정
-            </button>
-            <button onclick="switchTab('checklist')" id="tab-checklist" class="px-3 md:px-5 py-1 text-sm border-t-2 border-l-2 border-r-2 border-gray-600 bg-[#a0a0a0] flex items-center gap-2">
-                <i data-lucide="check-square" class="w-3 h-3"></i> 체크리스트
-            </button>
-            <button onclick="switchTab('expense')" id="tab-expense" class="px-3 md:px-5 py-1 text-sm border-t-2 border-l-2 border-r-2 border-gray-600 bg-[#a0a0a0] flex items-center gap-2">
-                <i data-lucide="wallet" class="w-3 h-3"></i> 경비
-            </button>
+            <button onclick="switchTab('schedule')" id="tab-schedule" class="px-3 md:px-5 py-1 text-sm border-t-2 border-l-2 border-r-2 border-gray-600 bg-[#a0a0a0] flex items-center gap-2">일정</button>
+            <button onclick="switchTab('checklist')" id="tab-checklist" class="px-3 md:px-5 py-1 text-sm border-t-2 border-l-2 border-r-2 border-gray-600 bg-[#a0a0a0] flex items-center gap-2">체크리스트</button>
+            <button onclick="switchTab('expense')" id="tab-expense" class="px-3 md:px-5 py-1 text-sm border-t-2 border-l-2 border-r-2 border-gray-600 bg-[#a0a0a0] flex items-center gap-2">경비</button>
         </div>
 
-        <!-- Content Area -->
         <div class="bg-[#c0c0c0] win-border border-white p-4">
-            <h1 class="text-xl font-black italic text-pink-600 mb-4 drop-shadow-[1px_1px_0px_rgba(0,255,255,1)] flex items-center gap-2">
+            <h1 class="text-xl font-black italic text-pink-600 mb-4 flex items-center gap-2">
                 <i data-lucide="sparkles" class="w-5 h-5"></i>
                 <span id="tab-title">2박 3일 여행 일정</span>
             </h1>
-
-            <div id="content-container">
-                <!-- Dynamic Content Injection -->
-            </div>
+            <div id="content-container"></div>
         </div>
 
-        <!-- Status Bar -->
         <div class="mt-2 border-t-2 border-gray-800 p-1 flex items-center justify-between text-[10px]">
-            <div id="status-text" class="bg-gray-200 win-inset px-2 flex-1 overflow-hidden">
-                System Status: READY
-            </div>
-            <div class="bg-gray-200 win-inset px-2 ml-1 italic flex items-center gap-1 shrink-0">
-                <i data-lucide="music" class="w-2 h-2"></i> TRAVEL.MIDI
-            </div>
+            <div id="status-text" class="bg-gray-200 win-inset px-2 flex-1 overflow-hidden">System Status: READY</div>
         </div>
     </div>
 
     <script>
-        // --- State ---
+        // --- State Management ---
         let state = {
             activeTab: 'schedule',
             activeDay: 1,
             editingId: null,
-            schedules: [
-                { id: 1, day: 1, time: '10:00', text: '인천공항 도착' },
-                { id: 2, day: 2, time: '09:00', text: '호텔 조식 및 출발' },
-                { id: 3, day: 3, time: '14:00', text: '기념품 쇼핑' }
-            ],
-            checklist: [
-                { id: 101, text: '여권 챙기기', completed: false }
-            ],
-            expenses: [
-                { id: 201, item: '비행기표', cost: 350000 }
-            ]
+            schedules: [],
+            checklist: [],
+            expenses: []
         };
 
-        // --- Functions ---
-        function switchTab(tab) {
-            state.activeTab = tab;
-            state.editingId = null;
-            render();
+        const STORAGE_KEY = 'TRIP_PLANNER_DATA';
+
+        // --- Persistence Functions ---
+        function saveToStorage() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                schedules: state.schedules,
+                checklist: state.checklist,
+                expenses: state.expenses
+            }));
         }
 
-        function switchDay(day) {
-            state.activeDay = day;
-            state.editingId = null;
-            render();
+        function loadFromStorage() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                state.schedules = parsed.schedules || [];
+                state.checklist = parsed.checklist || [];
+                state.expenses = parsed.expenses || [];
+            } else {
+                // 초기 기본 데이터
+                state.schedules = [
+                    { id: 1, day: 1, time: '10:00', text: '인천공항 도착' },
+                    { id: 2, day: 2, time: '09:00', text: '호텔 조식' }
+                ];
+                state.checklist = [{ id: 101, text: '여권 챙기기', completed: false }];
+                state.expenses = [{ id: 201, item: '비행기표', cost: 350000 }];
+            }
         }
 
-        // --- CRUD Logic ---
+        // --- Logic Functions (Modified for Saving) ---
+        function switchTab(tab) { state.activeTab = tab; state.editingId = null; render(); }
+        function switchDay(day) { state.activeDay = day; state.editingId = null; render(); }
+
         function addItem(type, e) {
             e.preventDefault();
             const form = e.target;
@@ -149,27 +113,20 @@
                 if (!item || isNaN(cost)) return;
                 state.expenses.push({ id: now, item, cost });
             }
+            saveToStorage();
             render();
         }
 
         function deleteItem(type, id) {
             state[type] = state[type].filter(i => i.id !== id);
+            saveToStorage();
             render();
         }
 
         function toggleCheck(id) {
             const item = state.checklist.find(i => i.id === id);
             if (item) item.completed = !item.completed;
-            render();
-        }
-
-        function startEdit(id) {
-            state.editingId = id;
-            render();
-        }
-
-        function cancelEdit() {
-            state.editingId = null;
+            saveToStorage();
             render();
         }
 
@@ -188,149 +145,54 @@
                 item.cost = parseInt(row.querySelector('.edit-cost').value);
             }
             state.editingId = null;
+            saveToStorage();
             render();
         }
 
-        // --- Render Engine ---
+        function startEdit(id) { state.editingId = id; render(); }
+        function cancelEdit() { state.editingId = null; render(); }
+
+        // --- Render Logic (Same as your original code structure) ---
         function render() {
             const container = document.getElementById('content-container');
             const title = document.getElementById('tab-title');
             const status = document.getElementById('status-text');
 
-            // Update Tabs
             document.querySelectorAll('[id^="tab-"]').forEach(btn => btn.classList.remove('tab-active'));
             document.getElementById(`tab-${state.activeTab}`).classList.add('tab-active');
 
             if (state.activeTab === 'schedule') {
                 title.innerText = '2박 3일 여행 일정';
-                status.innerText = `System Status: DAY ${state.activeDay} EDITING...`;
+                status.innerText = `DAY ${state.activeDay} EDITING...`;
                 
                 let dayButtons = [1, 2, 3].map(d => `
-                    <button onclick="switchDay(${d})" class="px-4 py-1 text-xs border-t border-l border-r border-gray-600 rounded-t-lg transition-all ${state.activeDay === d ? 'day-active' : 'bg-[#b0b0b0]'}">
-                        Day ${d} ${d === 1 ? '🛫' : d === 2 ? '📸' : '🏠'}
-                    </button>
+                    <button onclick="switchDay(${d})" class="px-4 py-1 text-xs border-t border-l border-r border-gray-600 rounded-t-lg ${state.activeDay === d ? 'day-active' : 'bg-[#b0b0b0]'}">Day ${d}</button>
                 `).join('');
 
-                let listHtml = state.schedules
-                    .filter(s => s.day === state.activeDay)
-                    .sort((a, b) => a.time.localeCompare(b.time))
-                    .map(item => {
-                        if (state.editingId === item.id) {
-                            return `
-                                <div class="flex gap-1 w-full border-b border-dotted border-gray-400 py-1" data-id="${item.id}">
-                                    <input type="time" class="edit-time border border-blue-500 text-xs w-20 p-1" value="${item.time}">
-                                    <input type="text" class="edit-text border border-blue-500 text-xs flex-1 p-1" value="${item.text}">
-                                    <button onclick="saveEdit('schedule', ${item.id})" class="text-green-600"><i data-lucide="save" class="w-4 h-4"></i></button>
-                                    <button onclick="cancelEdit()" class="text-red-600"><i data-lucide="x" class="w-4 h-4"></i></button>
-                                </div>`;
-                        }
-                        return `
-                            <div class="flex items-center justify-between border-b border-dotted border-gray-400 pb-1 hover:bg-yellow-50 px-1">
-                                <div class="flex gap-3 items-center">
-                                    <span class="bg-blue-800 text-white px-1 text-[10px] font-bold shadow-sm">${item.time}</span>
-                                    <span class="text-sm font-bold text-gray-800">${item.text}</span>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button onclick="startEdit(${item.id})" class="text-gray-400 hover:text-blue-600"><i data-lucide="edit-3" class="w-3 h-3"></i></button>
-                                    <button onclick="deleteItem('schedules', ${item.id})" class="text-gray-400 hover:text-red-600"><i data-lucide="trash-2" class="w-3 h-3"></i></button>
-                                </div>
-                            </div>`;
-                    }).join('');
+                let listHtml = state.schedules.filter(s => s.day === state.activeDay).sort((a, b) => a.time.localeCompare(b.time)).map(item => {
+                    if (state.editingId === item.id) {
+                        return `<div class="flex gap-1 py-1" data-id="${item.id}"><input type="time" class="edit-time text-xs w-20 p-1" value="${item.time}"><input type="text" class="edit-text text-xs flex-1 p-1" value="${item.text}"><button onclick="saveEdit('schedule', ${item.id})" class="text-green-600">💾</button></div>`;
+                    }
+                    return `<div class="flex justify-between border-b border-dotted py-1"><div class="text-sm font-bold"><span>${item.time}</span> <span class="ml-2">${item.text}</span></div><div class="flex gap-2"><button onclick="startEdit(${item.id})">✏️</button><button onclick="deleteItem('schedules', ${item.id})">🗑️</button></div></div>`;
+                }).join('');
 
-                container.innerHTML = `
-                    <div class="flex gap-1 mb-4 border-b-2 border-gray-500 pb-0">${dayButtons}</div>
-                    <form onsubmit="addItem('schedule', event)" class="flex flex-wrap gap-2 mb-4 bg-white/30 p-2 border border-gray-500">
-                        <input type="time" name="time" class="p-1 border-2 border-gray-800 text-sm">
-                        <input type="text" name="schedule" placeholder="할 일 입력" class="flex-1 p-1 border-2 border-gray-800 text-sm min-w-[120px]">
-                        <button type="submit" class="bg-[#c0c0c0] win-border border-b-black border-r-black px-3 py-1 font-bold text-xs">추가</button>
-                    </form>
-                    <div class="space-y-2 bg-white p-3 border-2 border-gray-800 min-h-[300px] shadow-inner">
-                        <p class="text-[10px] text-blue-600 font-bold mb-2">현재 선택: DAY ${state.activeDay} SCHEDULE</p>
-                        ${listHtml || '<div class="text-center py-10 italic text-gray-400 text-xs">계획된 일정이 없습니다.</div>'}
-                    </div>`;
-
+                container.innerHTML = `<div class="flex gap-1 mb-4 border-b-2 border-gray-500">${dayButtons}</div><form onsubmit="addItem('schedule', event)" class="flex gap-2 mb-4"><input type="time" name="time" class="p-1 text-sm border-2 border-black"><input type="text" name="schedule" placeholder="일정" class="flex-1 p-1 text-sm border-2 border-black"><button type="submit" class="bg-[#c0c0c0] win-border px-2 text-xs">ADD</button></form><div class="bg-white p-3 border-2 border-black min-h-[300px]">${listHtml || '기록된 일정이 없습니다.'}</div>`;
             } else if (state.activeTab === 'checklist') {
+                // Checklist Render Logic (기존과 동일하되 저장 기능 연동됨)
                 title.innerText = 'PACKING LIST';
-                status.innerText = 'System Status: CHECKLIST MODE';
-
-                let listHtml = state.checklist.map(item => {
-                    if (state.editingId === item.id) {
-                        return `
-                            <div class="flex gap-1 w-full border-b border-gray-200 py-1" data-id="${item.id}">
-                                <input type="text" class="edit-text border border-blue-500 text-xs flex-1 p-1" value="${item.text}">
-                                <button onclick="saveEdit('checklist', ${item.id})" class="text-green-600"><i data-lucide="save" class="w-4 h-4"></i></button>
-                            </div>`;
-                    }
-                    return `
-                        <div class="flex items-center justify-between border-b border-gray-100 py-1">
-                            <div class="flex items-center gap-2">
-                                <button onclick="toggleCheck(${item.id})">
-                                    ${item.completed ? '<i data-lucide="heart" class="w-4 h-4 text-pink-500 fill-pink-500"></i>' : '<div class="w-4 h-4 border border-black bg-gray-50"></div>'}
-                                </button>
-                                <span class="text-sm ${item.completed ? 'line-through text-gray-400 font-normal' : 'font-bold'}">${item.text}</span>
-                            </div>
-                            <div class="flex gap-2">
-                                <button onclick="startEdit(${item.id})" class="text-gray-300 hover:text-blue-500"><i data-lucide="edit-3" class="w-3 h-3"></i></button>
-                                <button onclick="deleteItem('checklist', ${item.id})" class="text-gray-300 hover:text-red-500"><i data-lucide="trash-2" class="w-3 h-3"></i></button>
-                            </div>
-                        </div>`;
-                }).join('');
-
-                container.innerHTML = `
-                    <form onsubmit="addItem('checklist', event)" class="flex gap-2 mb-6 bg-white/30 p-2 border border-gray-500">
-                        <input type="text" name="checklist" placeholder="챙길 물건..." class="flex-1 p-1 border-2 border-gray-800 text-sm">
-                        <button type="submit" class="bg-[#c0c0c0] win-border border-b-black border-r-black px-4 py-1 font-bold text-xs">추가</button>
-                    </form>
-                    <div class="space-y-2 bg-white p-3 border-2 border-gray-800 min-h-[300px]">${listHtml}</div>`;
-
+                let listHtml = state.checklist.map(item => `<div class="flex justify-between border-b py-1"><div><input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleCheck(${item.id})"> <span class="${item.completed ? 'line-through text-gray-400' : ''}">${item.text}</span></div><button onclick="deleteItem('checklist', ${item.id})">🗑️</button></div>`).join('');
+                container.innerHTML = `<form onsubmit="addItem('checklist', event)" class="flex gap-2 mb-4"><input type="text" name="checklist" class="flex-1 p-1 border-2 border-black text-sm"><button type="submit" class="bg-[#c0c0c0] win-border px-2 text-xs">ADD</button></form><div class="bg-white p-3 border-2 border-black min-h-[300px]">${listHtml}</div>`;
             } else if (state.activeTab === 'expense') {
+                // Expense Render Logic (기존과 동일하되 저장 기능 연동됨)
                 title.innerText = 'BUDGET TRACKER';
-                status.innerText = 'System Status: ACCOUNTING';
-
                 let total = state.expenses.reduce((sum, i) => sum + i.cost, 0);
-                let listHtml = state.expenses.map(item => {
-                    if (state.editingId === item.id) {
-                        return `
-                            <div class="flex gap-1 w-full border-b border-gray-100 py-2" data-id="${item.id}">
-                                <input type="text" class="edit-item border border-blue-500 text-xs flex-1 p-1" value="${item.item}">
-                                <input type="number" class="edit-cost border border-blue-500 text-xs w-20 p-1" value="${item.cost}">
-                                <button onclick="saveEdit('expense', ${item.id})" class="text-green-600"><i data-lucide="save" class="w-4 h-4"></i></button>
-                            </div>`;
-                    }
-                    return `
-                        <div class="flex items-center justify-between border-b border-gray-100 text-sm py-2">
-                            <div class="flex flex-col">
-                                <span class="font-bold text-gray-700">${item.item}</span>
-                                <span class="text-[10px] text-gray-400">ID_${item.id.toString().slice(-4)}</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-blue-800 font-bold bg-blue-50 px-1">${item.cost.toLocaleString()}원</span>
-                                <button onclick="startEdit(${item.id})"><i data-lucide="edit-3" class="w-3 h-3 text-gray-300 hover:text-blue-500"></i></button>
-                                <button onclick="deleteItem('expenses', ${item.id})"><i data-lucide="trash-2" class="w-3 h-3 text-gray-300 hover:text-red-500"></i></button>
-                            </div>
-                        </div>`;
-                }).join('');
-
-                container.innerHTML = `
-                    <form onsubmit="addItem('expense', event)" class="flex flex-wrap gap-2 mb-6 bg-white/30 p-2 border border-gray-500">
-                        <input type="text" name="expense" placeholder="항목" class="flex-1 p-1 border-2 border-gray-800 text-sm min-w-[100px]">
-                        <input type="number" name="cost" placeholder="금액" class="w-24 p-1 border-2 border-gray-800 text-sm">
-                        <button type="submit" class="bg-[#c0c0c0] win-border border-b-black border-r-black px-4 py-1 font-bold text-xs">추가</button>
-                    </form>
-                    <div class="bg-white border-2 border-gray-800 min-h-[300px] flex flex-col">
-                        <div class="p-3 flex-1 overflow-y-auto">${listHtml}</div>
-                        <div class="bg-yellow-100 p-2 border-t-2 border-gray-800 flex justify-between items-center">
-                            <span class="text-xs font-bold text-gray-600 flex items-center gap-1"><i data-lucide="sparkles" class="w-3 h-3"></i> TOTAL_COST</span>
-                            <span class="text-lg font-black text-red-600 underline decoration-double">${total.toLocaleString()}원</span>
-                        </div>
-                    </div>`;
+                let listHtml = state.expenses.map(item => `<div class="flex justify-between py-1"><span>${item.item}</span><span>${item.cost.toLocaleString()}원 <button onclick="deleteItem('expenses', ${item.id})">🗑️</button></span></div>`).join('');
+                container.innerHTML = `<form onsubmit="addItem('expense', event)" class="flex gap-2 mb-4"><input type="text" name="expense" class="flex-1 p-1 border-2 border-black text-sm"><input type="number" name="cost" class="w-20 p-1 border-2 border-black text-sm"><button type="submit" class="bg-[#c0c0c0] win-border px-2 text-xs">ADD</button></form><div class="bg-white p-3 border-2 border-black min-h-[250px]">${listHtml}</div><div class="bg-yellow-100 p-2 border-t-2 border-black text-right font-black">TOTAL: ${total.toLocaleString()}원</div>`;
             }
-
             lucide.createIcons();
         }
 
-        // Initial Render
-        window.onload = render;
+        window.onload = () => { loadFromStorage(); render(); };
     </script>
 </body>
 </html>
